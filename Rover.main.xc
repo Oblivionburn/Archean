@@ -22,7 +22,7 @@ update
 	$spedometer.write(10, 22, white, $speedText)
 	
 	var $charge = input_number($batteryPort, 2)
-	var $chargePercent = (($charge * 100) * $batteryScreen.height) / 100
+	var $chargePercent = $batteryScreen.height - ((($charge * 100) * $batteryScreen.height) / 100)
 	
 	var $bx = 0
 	var $chargeText = ""
@@ -35,7 +35,7 @@ update
 	
 	$batteryScreen.blank(black)
 	
-	$batteryScreen.draw_rect($batteryScreen.width, $batteryScreen.height, 0, $chargePercent, $darkCyan, $darkCyan)
+	$batteryScreen.draw_rect(0, $batteryScreen.height, $batteryScreen.width, $chargePercent, $darkCyan, $darkCyan)
 	$batteryScreen.write($bx, 25, white, $chargeText)
 	
 	var $forward_backward = input_number($seatPort, 1)
