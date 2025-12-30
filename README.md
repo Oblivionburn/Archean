@@ -1,2 +1,1 @@
-# Archean
-
+# Scripts for Archean game
