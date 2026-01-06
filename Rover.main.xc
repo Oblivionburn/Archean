@@ -16,11 +16,6 @@ var $steering = 0
 var $darkCyan = color(0, 150, 150, 255)
 
 update
-	var $speed = input_number($speedSensorPort, 0)
-	var $speedText = text("{000.000} m/s", $speed:text)
-	$spedometer.blank(black)
-	$spedometer.write(10, 22, white, $speedText)
-	
 	var $charge = input_number($batteryPort, 2)
 	var $chargePercent = $batteryScreen.height - ((($charge * 100) * $batteryScreen.height) / 100)
 	
@@ -41,6 +36,17 @@ update
 	var $forward_backward = input_number($seatPort, 1)
 	var $left_right = input_number($seatPort, 2)
 	var $down_up = input_number($seatPort, 3)
+	
+	var $speed = input_number($speedSensorPort, 0)
+	var $speedText = ""
+	if $forward_backward > 0
+		$speedText = text("{000.000} m/s", $speed:text)
+	elseif $forward_backward < 0
+		$speedText = text("-{000.000} m/s", $speed:text)
+	else
+		$speedText = "000.000 m/s"
+	$spedometer.blank(black)
+	$spedometer.write(10, 22, white, $speedText)
 	
 	if $forward_backward > 0
 		$acceleration += 0.01
@@ -85,3 +91,8 @@ update
 	output_number($wheelPort_FrontRight, 1, $steering)
 	;output_number($wheelPort_BackLeft, 1, -$left_right)
 	;output_number($wheelPort_BackRight, 1, -$left_right)
+	
+	if $acceleration > 0
+		$acceleration -= 0.005
+	elseif $acceleration < 0
+		$acceleration += 0.005
